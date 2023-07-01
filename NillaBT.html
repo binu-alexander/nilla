@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nilla: Bible Text Editor</title>
+    <title>Nilla: USFM Text Editor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material/textfield@10.0.0/dist/mdc.textfield.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material/button@10.0.0/dist/mdc.button.min.css" />
     <style>
@@ -55,13 +55,13 @@
 </head>
 <body>
     <div id="app" class="container">
-        <h1>Nilla : Bible  Editor </h1>
+        <h1>Nilla : Bible Editor</h1>
         <div class="text-editor">
             <div class="mdc-text-field">
                 <textarea class="mdc-text-field__input" v-model="csvInput" rows="10" placeholder="Enter CSV input..."></textarea>
             </div>
             <div class="mdc-text-field">
-                <textarea class="mdc-text-field__input" v-model="taggedOutput" rows="10" placeholder="Tagged output will appear here..." readonly></textarea>
+                <textarea class="mdc-text-field__input" v-model="taggedOutput" rows="10" placeholder="Tagged output will appear here..."></textarea>
             </div>
         </div>
         <div class="buttons">
@@ -70,7 +70,7 @@
                 <input type="file" accept=".csv" style="display: none;" @change="importCSV" />
             </label>
             <button class="mdc-button mdc-button--raised" @click="tagText">
-                <span class="mdc-button__label">Load Template</span>
+                <span class="mdc-button__label">Tag Text</span>
             </button>
             <button class="mdc-button mdc-button--raised" @click="saveOutput">
                 <span class="mdc-button__label">Save Output</span>
@@ -133,7 +133,7 @@
                                 currentChapter = chapter;
                             }
 
-                            taggedOutput += `\\v ${verse}\n`;
+                            taggedOutput += `\\v ${verse} ${this.taggedOutput}\n`;
                         }
                     }
 
