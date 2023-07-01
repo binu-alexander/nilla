@@ -1,7 +1,7 @@
 
 # Nilla 0.1
 
-Nilla is the most lightweight tool ever designed specifically for Bible data, offering seamless conversion of plain vanilla CSV files into the widely used USFM (Unified Standard Format Markup) format. It serves as both a tagger and editor, allowing users to efficiently work with their Bible data. Nilla's primary focus is on minimum BCV tags, encompassing essential Book, Chapter, and Verse information.
+Nilla is a most lightweight tool  designed specifically for Bible data, offering seamless conversion of plain vanilla CSV files into the widely used USFM (Unified Standard Format Markup) format. It serves as both a tagger and editor, allowing users to efficiently work with their Bible data. Nilla's primary focus is on minimum BCV tags, encompassing essential Book, Chapter, and Verse information.
 
 ## Features
 
