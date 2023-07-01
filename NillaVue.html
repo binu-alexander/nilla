@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nilla: Bible Text Editor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material/textfield@10.0.0/dist/mdc.textfield.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material/button@10.0.0/dist/mdc.button.min.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .text-editor {
+            display: flex;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .text-editor .mdc-text-field {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .text-editor textarea {
+            width: 100%;
+            height: 400px;
+            box-sizing: border-box;
+            resize: none;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .buttons .mdc-button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>Nilla : Bible  Editor Lite</h1>
+        <div class="text-editor">
+            <div class="mdc-text-field">
+                <textarea class="mdc-text-field__input" v-model="csvInput" rows="10" placeholder="Enter CSV input..."></textarea>
+            </div>
+            <div class="mdc-text-field">
+                <textarea class="mdc-text-field__input" v-model="taggedOutput" rows="10" placeholder="Tagged output will appear here..." readonly></textarea>
+            </div>
+        </div>
+        <div class="buttons">
+            <label class="mdc-button mdc-button--outlined">
+                <span class="mdc-button__label">Import CSV</span>
+                <input type="file" accept=".csv" style="display: none;" @change="importCSV" />
+            </label>
+            <button class="mdc-button mdc-button--raised" @click="tagText">
+                <span class="mdc-button__label">Tag Text</span>
+            </button>
+            <button class="mdc-button mdc-button--raised" @click="saveOutput">
+                <span class="mdc-button__label">Save Output</span>
+            </button>
+            <button class="mdc-button mdc-button--raised" @click="resetText">
+                <span class="mdc-button__label">Reset</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@material/textfield@10.0.0/dist/mdc.textfield.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@material/button@10.0.0/dist/mdc.button.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    csvInput: '',
+                    taggedOutput: ''
+                };
+            },
+            methods: {
+                importCSV(event) {
+                    const file = event.target.files[0];
+
+                    if (file) {
+                        const reader = new FileReader();
+
+                        reader.onload = (e) => {
+                            const contents = e.target.result;
+                            this.csvInput = contents;
+                        };
+
+                        reader.readAsText(file);
+                    }
+                },
+                tagText() {
+                    const lines = this.csvInput.split('\n');
+                    let taggedOutput = '';
+                    let currentBook = '';
+                    let currentChapter = '';
+
+                    for (let i = 0; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        if (line) {
+                            const parts = line.split(',');
+                            const book = parts[0].trim();
+                            const chapter = parts[1].trim();
+                            const verse = parts[2].trim();
+                            const text = parts[3].trim();
+
+                            if (book !== currentBook || chapter !== currentChapter) {
+                                if (taggedOutput) {
+                                    taggedOutput += '\n\n';
+                                }
+
+                                taggedOutput += `\\ide ${book}\n\\c ${chapter}\n`;
+                                currentBook = book;
+                                currentChapter = chapter;
+                            }
+
+                            taggedOutput += `\\v ${verse} ${text}\n`;
+                        }
+                    }
+
+                    this.taggedOutput = taggedOutput;
+                },
+                saveOutput() {
+                    if (!this.taggedOutput) {
+                        alert('No tagged output to save.');
+                        return;
+                    }
+
+                    const blob = new Blob([this.taggedOutput], { type: 'text/plain' });
+                    let fileName = 'output.usfm'; // Default file name
+
+                    // Get the book name
+                    const lines = this.csvInput.split('\n');
+                    if (lines.length > 0) {
+                        const parts = lines[0].split(',');
+                        const book = parts[0].trim();
+                        if (book) {
+                            fileName = `${book}.usfm`; // Use the book name as the file name
+                        }
+                    }
+
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = fileName;
+                    link.click();
+
+                    window.URL.revokeObjectURL(link.href);
+                },
+                resetText() {
+                    this.csvInput = '';
+                    this.taggedOutput = '';
+
+                    // Clear file input value
+                    const fileInput = document.querySelector('input[type="file"]');
+                    fileInput.value = '';
+                }
+            },
+            mounted() {
+                const textFields = document.querySelectorAll('.mdc-text-field');
+                for (const textField of textFields) {
+                    mdc.textField.MDCTextField.attachTo(textField);
+                }
+
+                const buttons = document.querySelectorAll('.mdc-button');
+                for (const button of buttons) {
+                    mdc.ripple.MDCRipple.attachTo(button);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
