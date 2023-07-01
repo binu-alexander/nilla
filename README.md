@@ -9,7 +9,7 @@ Nilla is a most lightweight tool  designed specifically for Bible data, offering
 
 - Minimum BCV Tags: With Nilla, you can take full advantage of its tagger and editor functionalities, which revolve around the minimum BCV tags required for Bible data. By adhering to standardized practices, Nilla guarantees that your USFM files contain precise and reliable information, including Book, Chapter, and Verse details.
 
-- Lightweight and User-Friendly: Nilla is designed to be the most lightweight tool ever, prioritizing simplicity and ease of use. Its intuitive interface enables users to quickly convert and edit their CSV files without unnecessary complications or steep learning curves.
+- Lightweight and User-Friendly: Nilla is designed to be an extremely lightweight tool , prioritizing simplicity and ease of use. Its minimal interface enables users to quickly convert and edit their CSV files without unnecessary complications or steep learning curves.
 
 ## Credits - OpenAI ChatGPT
 
