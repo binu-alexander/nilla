@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nilla: Bible Text Editor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material/textfield@10.0.0/dist/mdc.textfield.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material/button@10.0.0/dist/mdc.button.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>Nilla: Bible Editor Lite</h1>
+        <div class="text-editor">
+            <div class="mdc-text-field">
+                <textarea class="mdc-text-field__input" v-model="csvInput" rows="10" placeholder="Enter CSV input..."></textarea>
+            </div>
+            <div class="mdc-text-field">
+                <textarea class="mdc-text-field__input" v-model="taggedOutput" rows="10" placeholder="Tagged output will appear here..." readonly></textarea>
+            </div>
+        </div>
+        <div class="buttons">
+            <label class="mdc-button mdc-button--outlined">
+                <span class="mdc-button__label">Import CSV</span>
+                <input type="file" accept=".csv" style="display: none;" @change="importCSV" />
+            </label>
+            <button class="mdc-button mdc-button--raised" @click="tagText">
+                <span class="mdc-button__label">Tag Text</span>
+            </button>
+            <button class="mdc-button mdc-button--raised" @click="saveOutput">
+                <span class="mdc-button__label">Save Output</span>
+            </button>
+            <button class="mdc-button mdc-button--raised" @click="resetText">
+                <span class="mdc-button__label">Reset</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@material/textfield@10.0.0/dist/mdc.textfield.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@material/button@10.0.0/dist/mdc.button.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
