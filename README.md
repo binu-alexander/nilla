@@ -11,6 +11,8 @@ Nilla is the most lightweight tool ever designed specifically for Bible data, of
 
 - Lightweight and User-Friendly: Nilla is designed to be the most lightweight tool ever, prioritizing simplicity and ease of use. Its intuitive interface enables users to quickly convert and edit their CSV files without unnecessary complications or steep learning curves.
 
+## Credits - OpenAI ChatGPT
+
 ## License
 
 Nilla is released under the MIT License. See the [LICENSE](LICENSE) file for more information.
